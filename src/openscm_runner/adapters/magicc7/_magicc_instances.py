@@ -36,8 +36,9 @@ class _MagiccInstances:
         insts = list(self.instances.keys())
 
         for magicc_inst in insts:
-            LOGGER.info("removing %s", self.instances[magicc_inst].root_dir)
-            shutil.rmtree(self.instances[magicc_inst].root_dir)
+            LOGGER.info("SKIPPING REMOVAL OF %s", self.instances[magicc_inst].root_dir)            
+            # LOGGER.info("removing %s", self.instances[magicc_inst].root_dir)
+            # shutil.rmtree(self.instances[magicc_inst].root_dir)
             self.instances.pop(magicc_inst)
 
     def __exit__(self, exc_type, exc_val, exc_tb):

@@ -192,9 +192,16 @@ def run_magicc_parallel(
         for v in output_vars
     ]
 
+    LOGGER.info("env var:")
+    LOGGER.info(os.environ["MAGICC_WORKER_ROOT_DIR"])
+
+    LOGGER.info("config.get:")
+    LOGGER.info(config.get("MAGICC_WORKER_ROOT_DIR", None))
+
     with TemporaryDirectoryIfNeeded(
         tempdir=config.get("MAGICC_WORKER_ROOT_DIR", None)
     ) as root_dir:
+        LOGGER.info("TemporaryDirectoryIfNeeded using tempdir %ss", config.get("MAGICC_WORKER_ROOT_DIR", None))
         runs = [
             {
                 "cfg": {
@@ -233,6 +240,9 @@ def run_magicc_parallel(
             LOGGER.info("Appending results into a single ScmRun")
             return scmdata.run_append([r for r in res if r is not None])
 
+        except Exception as error:
+            LOGGER.info("AN EXCEPTION OCURRED:")
+            LOGGER.info(str(error))
         finally:
             instances.cleanup()
             LOGGER.info("Shutting down parallel pool")
